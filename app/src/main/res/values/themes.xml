@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+<<<<<<< HEAD
     <style name="Theme.Examen" parent="android:Theme.Material.Light.NoActionBar" />
+=======
+    <style name="Theme.Practica1" parent="android:Theme.Material.Light.NoActionBar" />
+>>>>>>> 61e7c52e31ef3b996455e67bbab475297a60db65
 </resources>

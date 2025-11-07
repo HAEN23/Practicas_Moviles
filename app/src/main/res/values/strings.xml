@@ -1,3 +1,7 @@
 <resources>
+<<<<<<< HEAD
     <string name="app_name">Examen</string>
+=======
+    <string name="app_name">Practica1</string>
+>>>>>>> 61e7c52e31ef3b996455e67bbab475297a60db65
 </resources>
