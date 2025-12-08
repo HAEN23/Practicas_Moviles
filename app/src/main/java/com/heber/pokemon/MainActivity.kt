@@ -61,7 +61,8 @@ class MainActivity : ComponentActivity() {
                                 PokemonDetailsScreen(
                                     viewModel = viewModel,
                                     pokemonName = pokemonName,
-                                    navController = navController
+                                    navController = navController,
+                                    pokemonDetailsState = viewModel.pokemonDetails
                                 )
                             }
                         }

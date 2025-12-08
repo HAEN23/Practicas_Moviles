@@ -36,19 +36,30 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.heber.pokemon.ViewModels.PokemonViewModel
 import androidx.navigation.NavController
+import com.heber.pokemon.model.PokemonDetails
+
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.State
 
 @Composable
 fun PokemonDetailsScreen(
     viewModel: PokemonViewModel,
     pokemonName: String,
     navController: NavController,
+    pokemonDetailsState: State<PokemonDetails?>,
     modifier: Modifier = Modifier
 ) {
     LaunchedEffect(pokemonName) {
         viewModel.fetchPokemonDetails(pokemonName)
     }
 
-    val pokemonDetails = viewModel.pokemonDetails
+    DisposableEffect(pokemonName) {
+        onDispose {
+            viewModel.clearPokemonDetails()
+        }
+    }
+
+    val pokemonDetails = pokemonDetailsState.value
     val favoritePokemons by viewModel.favoritePokemons.collectAsState()
     val isFavorite = favoritePokemons.any { it.name == pokemonName }
     val scrollState = rememberScrollState()

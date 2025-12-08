@@ -1,5 +1,7 @@
 package com.heber.pokemon.ViewModels
 
+import android.util.Log
+import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -18,8 +20,7 @@ class PokemonViewModel(private val db: PokemonDatabase) : ViewModel() {
         get() = _pokemons.value
 
     private val _pokemonDetails = mutableStateOf<PokemonDetails?>(null)
-    val pokemonDetails: PokemonDetails?
-        get() = _pokemonDetails.value
+    val pokemonDetails: State<PokemonDetails?> = _pokemonDetails
 
     val favoritePokemons = db.favoritePokemonDao().getFavoritePokemons()
         .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
@@ -33,7 +34,7 @@ class PokemonViewModel(private val db: PokemonDatabase) : ViewModel() {
             try {
                 _pokemons.value = RetrofitInstance.api.getPokemons(limit = 2000).results
             } catch (e: Exception) {
-                // Handle error
+                Log.e("PokemonViewModel", "Error fetching pokemons", e)
             }
         }
     }
@@ -43,9 +44,13 @@ class PokemonViewModel(private val db: PokemonDatabase) : ViewModel() {
             try {
                 _pokemonDetails.value = RetrofitInstance.api.getPokemonDetails(name)
             } catch (e: Exception) {
-                // Handle error
+                Log.e("PokemonViewModel", "Error fetching details for $name", e)
             }
         }
+    }
+
+    fun clearPokemonDetails() {
+        _pokemonDetails.value = null
     }
 
     fun addFavorite(pokemon: Pokemon) {
